@@ -5,13 +5,15 @@ import com.shivam.ecom_app.controller.dto.ProductRequestDto;
 import com.shivam.ecom_app.controller.dto.ProductResponseDto;
 import com.shivam.ecom_app.model.Product;
 import com.shivam.ecom_app.repository.ProductRepository;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
+@Data
+@AllArgsConstructor
 public class ProductService {
     private final ProductRepository productRespository;
 
@@ -56,6 +58,7 @@ public class ProductService {
 
     private ProductResponseDto mapToResponse(Product product){
        ProductResponseDto response = new ProductResponseDto();
+       response.setId(product.getId());
        response.setName(product.getName());
        response.setDescription(product.getDescription());
        response.setPrice(product.getPrice());

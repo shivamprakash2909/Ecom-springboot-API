@@ -6,6 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data //lombok used to generate all the getters and setters automatically {generates getters + setters + equals + hashCode + toString automatically}
 @Entity(name ="users") //marks a Java class as a JPA entity, meaning it maps to a database table. Name attribute sets the JPQL entity name used in queries.
@@ -14,17 +15,27 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
+
     @Column(nullable = false)
     private String firstName;
+
     @Column(nullable = false)
     private String lastName;
+
     @Column(unique = true, nullable = false)
     private String email;
+
+    @Column(nullable = false)
     private String password;
     private UserRole role = UserRole.CUSTOMER;
-    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
+
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "address_id", referencedColumnName = "id", nullable = true)
     private Address address;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CartItem> cartItems;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
     @UpdateTimestamp

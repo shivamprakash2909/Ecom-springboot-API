@@ -1,4 +1,6 @@
-package com.shivam.ecom_app.controller.dto;
+package com.shivam.ecom_app.controller;
+import com.shivam.ecom_app.controller.dto.ProductRequestDto;
+import com.shivam.ecom_app.controller.dto.ProductResponseDto;
 import com.shivam.ecom_app.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
