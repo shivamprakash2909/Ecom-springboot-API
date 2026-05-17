@@ -10,6 +10,7 @@ import com.shivam.ecom_app.model.User;
 import com.shivam.ecom_app.repository.CartRepository;
 import com.shivam.ecom_app.repository.ProductRepository;
 import com.shivam.ecom_app.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.stereotype.Service;
@@ -86,9 +87,15 @@ public class CartService {
         return "Cart  updatedSuccessfully";
     }
 
+    @Transactional
+    public void clearCart(Long userId) {
+        userRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User not found"));
+        cartRepository.deleteByUserId(userId);
+    }
      private CartResponseDto mapToResponse(CartItem cartItem){
          CartResponseDto response = new CartResponseDto();
          response.setProductId(cartItem.getProduct().getId());
+//         response.setProduct(cartItem.getProduct());
          response.setProductName(cartItem.getProduct().getName());
          response.setQuantity(cartItem.getQuantity());
          response.setPrice(cartItem.getPrice());
